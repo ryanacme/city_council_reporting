@@ -4,6 +4,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
+
+
 Meteor.startup(function() {
     GoogleMaps.load({
     	key: "AIzaSyADLWoisprDl-4dpjtzeGaHDbEMEfTEx8k",
@@ -16,6 +18,7 @@ Meteor.startup(function() {
 // });
 
 
+
 //---- routing------------------
 
 Router.configure({
@@ -24,9 +27,13 @@ Router.configure({
 
 Router.route('/', function () {
 	// history.back();
+	// this.render("navbar", {
+	// 	to:"nav1"
+	// });
 	this.render('welcome', {
 		to:"main"
 	});
+	document.body.className = "showBackgroundImage";
 });
 
 Router.route("/images", function(){
@@ -47,6 +54,8 @@ Router.route("/images", function(){
 	this.render("images", {
 		to:"main"
 	});
+	document.body.className = "showBackgroundImage2";
+
 	
 });
 
@@ -65,6 +74,7 @@ Router.route("/image/:_id", function(){
 			return Images.findOne({_id:this.params._id});
 		}
 	});
+
 });
 
 Router.route("/telegram/:_id", function(){
@@ -149,6 +159,13 @@ Template.image.onCreated(function() {
 Template.image.onRendered(function() {
     this.$('.selectpicker').selectpicker();
     categorySet();
+    $("#rowTwo").width($(".single-img").width()+16);
+    // console.log($(".single-img").width());
+    // $("#rowTwo").width(300);
+});
+
+Template.welcome.onRendered(function() {
+    $('[data-toggle="tooltip"]').tooltip();   
 });
 
 Template.image.helpers({
@@ -214,7 +231,7 @@ Template.image.helpers({
 
   	categories: function(){
   	  
-      return ["facebook", "news", "tv", "tweets"];
+      return ["Jobs", "Water Supply", "Rubbish", "Road", "Wastewater", "Industrial Pollution"];
     },
     catSet: function(){
     	categorySet();
@@ -227,10 +244,20 @@ Template.images.helpers({
 			return Images.find({createdBy:Session.get("userFilter")},{sort:{createdOn:-1, rating:-1}});
 		}//if
 		else{
-			return Images.find({},{sort:{createdOn:-1, rating:-1}, limit:Session.get("imageLimit")});
+			return Images.find({category:Session.get("category")},{sort:{createdOn:-1, rating:-1}, limit:Session.get("imageLimit")});
 		}//else
 		
 	}, //helper
+	getDepermentTitle: function(){
+		var department = Session.get("category")
+		if (department == "Jobs"){
+			return "Here are list of all unassigned jobs";
+		}
+		else {
+			return "Welcome to Department of " + department;
+		}
+	},
+
 	filtering_images: function(){
 		if (Session.get("userFilter")){ //they set a filter
 			return true;
@@ -271,6 +298,19 @@ Template.messageForm.helpers({
 	}
 });
 
+Template.navbar.events({
+	
+	"click .js-select-department":function(event){
+		var department = event.currentTarget.text;
+		Session.set("category", department);
+		console.log(department);
+		
+
+		// console.log(event);
+		// console.log(event.target);
+		// console.log(event.currentTarget);
+	},
+});
 
 Template.image.events({
 	

@@ -22,6 +22,82 @@ Meteor.startup(function(){
 	// var obj = {};
 	// var imgTelegram = {};
 
+
+	TelegramBot.addListener('incoming_caption', function(command, username, original) {
+		obj = {};
+		imgTelegram = {};
+		console.log(obj);
+		var message_id = original.message_id;
+		var file = TelegramBot.method('getFile', {
+			file_id: original.photo[2].file_id
+		});
+		console.log(file);
+
+		// TelegramBot.method('deleteMessage',{
+	 //    		chat_id: original.chat.id,
+	 //    		message_id: original.message_id,
+		// });
+		
+		// Don't do this in production because it will expose your Telegram Bot's API key
+		var filePath = 'https://api.telegram.org/file/bot' + TelegramBot.token + '/' + file.result.file_path;
+		imgTelegram = {telegramImage: true,
+					   img_src:filePath, 
+					   img_alt:"Telegram_" + message_id,
+					   img_caption: original.caption,
+					   createdOn: new Date(),
+					   createdBy: username,
+					   category: "Jobs",
+					   photoFileId: file.result.file_id};
+		console.log(imgTelegram);
+		var ifPhotoExist = Images.findOne({ "photoFileId": { $eq: file.result.file_id } });
+		// console.log(ifPhotoExist);
+
+		if (ifPhotoExist){
+			console.log("Photo has already been inserted!!");
+			imgTelegram = {};
+			obj = {};
+			TelegramBot.send("Sorry we don't accept this photo as you have already sent it to us!!", original.chat.id);
+		}
+
+		else{
+			obj.stage = 0;
+			// var replyKeyboardRemove= {
+	  //   		'remove_keyboard': true, 
+			// };
+			// var reply_markup = JSON.stringify(replyKeyboardRemove);
+			// TelegramBot.method('sendMessage',{
+	  //   		chat_id: original.chat.id,
+	  //   		text:'We have got your photo. Thanks!', 
+	  //   		reply_markup:reply_markup,
+	  //   		// reply_to_message: "good"
+			// });
+			var a={
+				text: "Send your Name & Number",
+				request_contact: true,
+			};
+			var keyboard = [
+	         	[a]
+			];
+			var replyKeyboardMarkup= {
+	    		'keyboard': keyboard, 
+	    		'resize_keyboard': true, 
+	    		'one_time_keyboard': true
+			};
+			var reply_markup = JSON.stringify(replyKeyboardMarkup);
+			TelegramBot.method('sendMessage',{
+	    		chat_id: original.chat.id,
+	    		text:'We got your photo, Thanks!. Please let us know your name and number by pressing the below button!', 
+	    		reply_markup:reply_markup,
+	    		// reply_to_message: "good"
+			});
+			console.log(obj);
+			console.log("-".repeat(40));
+
+		}	//else
+	}, 'caption'); // incoming_photo listener
+
+
+
 	TelegramBot.addListener('incoming_photo', function(command, username, original) {
 		obj = {};
 		imgTelegram = {};
@@ -42,8 +118,10 @@ Meteor.startup(function(){
 		imgTelegram = {telegramImage: true,
 					   img_src:filePath, 
 					   img_alt:"Telegram_" + message_id,
+					   img_caption: "No additional information has been provided!",
 					   createdOn: new Date(),
 					   createdBy: username,
+					   category:"Jobs",
 					   photoFileId: file.result.file_id};
 		console.log(imgTelegram);
 		var ifPhotoExist = Images.findOne({ "photoFileId": { $eq: file.result.file_id } });

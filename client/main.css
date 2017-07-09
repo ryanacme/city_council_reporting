@@ -42,3 +42,84 @@ body{
   height: 300px;
   /*max-height: 50%;*/
 }
+
+.tooltip {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: left;
+  text-align: start;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  white-space: normal;
+  /* ... */
+}
+
+  .tooltip-inner {
+  max-width: 300px;
+  width: 300px;
+  font-weight: bold;
+  padding: 7px 8px;
+  color: #fff;
+  /*color: red;*/
+  text-align: center;
+  background-color: #000;
+  border-radius: 4px;
+}
+
+a#telegramLink{
+	color:red;
+}
+
+span#telegramSearch{
+	color:red;
+}
+
+.jumbotron#jumbo1 {
+
+
+	/*align-items: center;*/
+    /*padding: 20px;*/
+    /*background: url('https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg') no-repeat center center; */
+    /*background-size: cover;*/
+    /*h1 {
+        font-size: 2em;
+    }*/
+    /*p {
+        font-size: 1.2em;
+        .btn {
+            padding: 0.5em;
+        }
+    }*/
+}
+
+/*body{ 
+  background: url('https://static.pexels.com/photos/33109/fall-autumn-red-season.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}*/
+
+.showBackgroundImage { 
+  background: url('https://static.pexels.com/photos/33109/fall-autumn-red-season.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; 
+}
+.showBackgroundImage2 { 
+  background: url('https://static.pexels.com/photos/165818/pexels-photo-165818.jpeg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; 
+}
+
