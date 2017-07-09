@@ -10,6 +10,8 @@ Meteor.startup(function() {
     GoogleMaps.load({
     	key: "AIzaSyADLWoisprDl-4dpjtzeGaHDbEMEfTEx8k",
     });
+    Session.set("category", "Jobs");
+
 });
 
 // $(document).ready(function() {
