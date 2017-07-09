@@ -46,7 +46,7 @@ Meteor.startup(function(){
 					   img_caption: original.caption,
 					   createdOn: new Date(),
 					   createdBy: username,
-					   category: "Jobs",
+					   category: "Backlog",
 					   photoFileId: file.result.file_id};
 		console.log(imgTelegram);
 		var ifPhotoExist = Images.findOne({ "photoFileId": { $eq: file.result.file_id } });
@@ -121,7 +121,7 @@ Meteor.startup(function(){
 					   img_caption: "No additional information has been provided!",
 					   createdOn: new Date(),
 					   createdBy: username,
-					   category:"Jobs",
+					   category:"Backlog",
 					   photoFileId: file.result.file_id};
 		console.log(imgTelegram);
 		var ifPhotoExist = Images.findOne({ "photoFileId": { $eq: file.result.file_id } });

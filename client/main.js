@@ -10,7 +10,7 @@ Meteor.startup(function() {
     GoogleMaps.load({
     	key: "AIzaSyADLWoisprDl-4dpjtzeGaHDbEMEfTEx8k",
     });
-    Session.set("category", "Jobs");
+    Session.set("category", "Backlog");
 
 });
 
@@ -233,7 +233,7 @@ Template.image.helpers({
 
   	categories: function(){
   	  
-      return ["Jobs", "Water Supply", "Rubbish", "Road", "Wastewater", "Industrial Pollution"];
+      return ["Backlog", "Water Supply", "Rubbish", "Road", "Wastewater", "Industrial Pollution"];
     },
     catSet: function(){
     	categorySet();
@@ -252,7 +252,7 @@ Template.images.helpers({
 	}, //helper
 	getDepermentTitle: function(){
 		var department = Session.get("category")
-		if (department == "Jobs"){
+		if (department == "Backlog"){
 			return "Here are list of all unassigned jobs";
 		}
 		else {
